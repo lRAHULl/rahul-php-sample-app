@@ -22,6 +22,10 @@ pipeline {
     // Agents
     agent any
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('rahul-dockerhub')
+    }
+
     // Stages In the pipeline
     stages {
         // Checkout from the Source Control
@@ -45,10 +49,17 @@ pipeline {
         stage('Build') {
             steps {
                 echo "====++++ Build Stage ++++===="
-                script {
-                    dockerImage = docker.build imageName
-                }
+                sh "docker build -t ${imageName}" .
                 echo "====++++ Build Successul ++++===="
+            }
+        }
+
+        // Login to docker registry
+        stage('Login') {
+            steps {
+                echo "====++++ Docker Login ++++===="
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                echo "====++++ Login Successul ++++===="
             }
         }
 
@@ -56,12 +67,7 @@ pipeline {
         stage('Publish') {
             steps {
                 echo "====++++ Publish Stage ++++===="
-                script {
-                    docker.withRegistry("https://docker.io/", 'rahul-dockerhub') {
-                        dockerImage.push()
-                        dockerImage.push('latest')
-                    }
-                }
+                sh "docker push ${imageName}"
                 echo "====++++ Publish Successul ++++===="
             }
         }
