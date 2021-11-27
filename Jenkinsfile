@@ -8,6 +8,8 @@ def buildNumber = currentBuild.number
 
 def imageName = "${dockerPublisherName}/${dockerRepoName}:${buildNumber}"
 
+def dockerImage = ''
+
 // Git Variables
 def gitRepoName = "https://github.com/lRAHULl/rahul-php-sample-app.git"
 def gitBranch = "master"
@@ -43,7 +45,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "====++++ Build Stage ++++===="
-                sh "docker build -t ${imageName} ."
+                dockerImage = docker.build(imageName)
                 echo "====++++ Build Successul ++++===="
             }
         }
@@ -53,7 +55,8 @@ pipeline {
             steps {
                 echo "====++++ Publish Stage ++++===="
                 withDockerRegistry(credentialsId: 'f96da42a-1dd9-40d2-a1dc-b438971dbd53', url: "https://docker.io/") {
-                    sh "docker image push ${imageName}"
+                    dockerImage.push()
+                    dockerImage.push('latest')
                 }
                 echo "====++++ Publish Successul ++++===="
             }
