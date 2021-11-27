@@ -9,6 +9,7 @@ metadata:
   name: php-app
   namespace: {{ $namespace }}
 spec:
+  replicas: 3 
   selector:
     matchLabels:
       app: php-app
@@ -23,7 +24,6 @@ spec:
         helm.sh/chart: {{ $chartName }}
         helm.sh/chart-version: {{ $chartVersion }}
     spec:
-      replicas: 3
       containers:
       - name: php-app
         image: {{ .Values.app.image }}
