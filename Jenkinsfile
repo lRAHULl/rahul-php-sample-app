@@ -7,6 +7,7 @@ def dockerRepoName = "php-app"
 def buildNumber = currentBuild.number
 
 def imageName = "${dockerPublisherName}/${dockerRepoName}:${buildNumber}"
+def imageNameLatestTag = "${dockerPublisherName}/${dockerRepoName}:latest"
 
 def dockerImage
 
@@ -50,6 +51,7 @@ pipeline {
             steps {
                 echo "====++++ Build Stage ++++===="
                 sh "docker build -t ${imageName} ."
+                sh "docker build -t ${imageNameLatestTag} ."
                 echo "====++++ Build Successul ++++===="
             }
         }
@@ -68,6 +70,7 @@ pipeline {
             steps {
                 echo "====++++ Publish Stage ++++===="
                 sh "docker push ${imageName}"
+                sh "docker push ${imageNameLatestTag}"
                 echo "====++++ Publish Successul ++++===="
             }
         }
