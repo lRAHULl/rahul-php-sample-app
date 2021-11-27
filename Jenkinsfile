@@ -57,7 +57,7 @@ pipeline {
             }
         }
 
-        // Clean the system
+        // Clean the system.
         stage('Cleanup') {
             steps {
                 echo "====++++ Cleanup Stage ++++===="
