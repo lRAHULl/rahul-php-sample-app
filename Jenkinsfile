@@ -79,7 +79,7 @@ pipeline {
         stage('Deploy - Dev') {
             steps {
                 input "Deploy to Dev?"
-                sh "export KUBECONFIG=~/kubeconfig.yaml"
+                sh "export KUBECONFIG=/var/lib/jenkins/workspace/rahul-eks/kubeconfig_rahulp-test-cluster"
                 sh "helm upgrade rahul-php-app ./helm/ --set app.image=${imageName}"
             }
         }
