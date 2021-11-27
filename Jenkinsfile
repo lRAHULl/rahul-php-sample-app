@@ -61,7 +61,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 echo "====++++ Cleanup Stage ++++===="
-                sh "docker rmi ${imageName}
+                sh "docker rmi ${imageName}"
                 echo "====++++ Cleanup Stage ++++===="
             }
         }
