@@ -49,7 +49,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "====++++ Build Stage ++++===="
-                sh "docker build -t ${imageName}" .
+                sh "docker build -t ${imageName} ."
                 echo "====++++ Build Successul ++++===="
             }
         }
