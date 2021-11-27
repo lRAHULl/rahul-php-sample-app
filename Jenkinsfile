@@ -77,9 +77,11 @@ pipeline {
 
         // Deploy
         stage('Deploy - Dev') {
-            input "Deploy to Dev?"
-            sh "export KUBECONFIG=~/kubeconfig.yaml"
-            sh "helm upgrade rahul-php-app ./helm/ --set app.image=${imageName}"
+            steps {
+                input "Deploy to Dev?"
+                sh "export KUBECONFIG=~/kubeconfig.yaml"
+                sh "helm upgrade rahul-php-app ./helm/ --set app.image=${imageName}"
+            }
         }
 
         // Clean the system.
