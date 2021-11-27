@@ -1,0 +1,2 @@
+app:
+  image: rahulraju/php-app:latest

@@ -1,0 +1,8 @@
+# Sample PHP App Helm Chart
+########################################################################
+apiVersion: v1
+name: php-app
+version: 0.1.0
+description: php-app Helm Chart
+type: application
+appVersion: "0.1.0"

@@ -1,0 +1,34 @@
+{{- $releaseName := .Release.Name -}}
+{{- $namespace := .Release.Namespace -}}
+{{- $chartName := .Chart.Name -}}
+{{- $chartVersion := .Chart.Version -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-app
+  namespace: {{ $namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: php-app
+      app.kubernetes.io/name: {{ $releaseName }}
+      helm.sh/chart: {{ $chartName }}
+      helm.sh/chart-version: {{ $chartVersion }}
+  template:
+    metadata:
+      labels:
+        app: php-app
+        app.kubernetes.io/name: {{ $releaseName }}
+        helm.sh/chart: {{ $chartName }}
+        helm.sh/chart-version: {{ $chartVersion }}
+    spec:
+      replicas: 3
+      containers:
+      - name: php-app
+        image: {{ .Values.app.image }}
+        imagePullPolicy: Always
+        resources: {}
+        envFrom:
+          - secretRef:
+              name: php-app-secret
