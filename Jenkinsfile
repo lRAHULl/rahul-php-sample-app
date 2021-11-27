@@ -52,7 +52,9 @@ pipeline {
         stage('Publish') {
             steps {
                 echo "====++++ Publish Stage ++++===="
-                sh "docker image push ${imageName}"
+                withDockerRegistry(credentialsId: 'f96da42a-1dd9-40d2-a1dc-b438971dbd53', url: 'docker.io') {
+                    sh "docker image push ${imageName}"
+                }
                 echo "====++++ Publish Successul ++++===="
             }
         }
