@@ -45,7 +45,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo "====++++ Build Stage ++++===="
-                dockerImage = docker.build imageName
+                script {
+                    dockerImage = docker.build imageName
+                }
                 echo "====++++ Build Successul ++++===="
             }
         }
@@ -54,9 +56,11 @@ pipeline {
         stage('Publish') {
             steps {
                 echo "====++++ Publish Stage ++++===="
-                docker.withRegistry("https://docker.io/", 'f96da42a-1dd9-40d2-a1dc-b438971dbd53') {
-                    dockerImage.push()
-                    dockerImage.push('latest')
+                script {
+                    docker.withRegistry("https://docker.io/", 'f96da42a-1dd9-40d2-a1dc-b438971dbd53') {
+                        dockerImage.push()
+                        dockerImage.push('latest')
+                    }
                 }
                 echo "====++++ Publish Successul ++++===="
             }
