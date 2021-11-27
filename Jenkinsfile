@@ -57,7 +57,7 @@ pipeline {
             steps {
                 echo "====++++ Publish Stage ++++===="
                 script {
-                    docker.withRegistry("https://docker.io/", 'f96da42a-1dd9-40d2-a1dc-b438971dbd53') {
+                    docker.withRegistry("https://docker.io/", 'rahul-dockerhub') {
                         dockerImage.push()
                         dockerImage.push('latest')
                     }
