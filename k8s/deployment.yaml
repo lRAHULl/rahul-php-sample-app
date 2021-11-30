@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: php-app
-        image: rahulraju/php-app:0.0.1
+        image: rahulraju/php-app:latest
         imagePullPolicy: Always
         resources: {}
         envFrom:
